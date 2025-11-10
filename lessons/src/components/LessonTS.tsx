@@ -1,22 +1,26 @@
-import React from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 
 //typescript lesson component
 
-type UserProps = {
-  name: string
-  age: number
-  isAdmin: boolean
-  price?: number
-}
-const LessonTS = ({name, age, isAdmin, price}:UserProps) => {
-  
+function LessonTS() {
+  const [count, setCount] = useState(100);
+  const prevCountRef = useRef(100);
+
+  useEffect(() => {
+    prevCountRef.current = count;
+  }, [count]);
+
+  const handleClick = () => {
+    setCount((prev) => prev - 2);
+  };
+
   return (
-    <div>
-      <h2>TypeScript Lesson Component</h2>
-      <h3>{name}</h3>
-      <h3>{age}</h3>
+    <div >
+      <h2>Current Count: {count}</h2>
+      <h2>Previous Count: {prevCountRef.current ?? "—"}</h2>
+      <button onClick={handleClick}>Decrease by 2</button>
     </div>
-  )
+  );
 }
 
 export default LessonTS
