@@ -1,19 +1,30 @@
-import { useState } from 'react'
-import './App.css'
-import Lesson0511 from './components/Lesson0511'
-import LessonTS from './components/LessonTS'
-import Lesson1211 from './components/Lesson1211'
-import { Link } from 'react-router-dom'
+import { createContext, useState, useContext } from 'react';
+import './App.css';
 
-function App() {
-  
+const ThemeContext = createContext('light');
+
+function Button() {
+  const { theme, setTheme } = useContext(ThemeContext);
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
   return (
-    <>
-      {/* <Lesson0511 /> */}
-      {/* <LessonTS /> */}
-      <Lesson1211 />
-    </>
-  )
+    <button className={theme} onClick={toggleTheme}>
+      BG change!
+    </button>
+  );
 }
 
-export default App
+const App = () => {
+  const [theme, setTheme] = useState('dark');
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <Button />
+    </ThemeContext.Provider>
+  );
+}
+
+export default App;
